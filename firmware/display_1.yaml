@@ -10,7 +10,7 @@ esphome:
 
 wifi:
   ssid: "WiFi-Casa"
-  password: "26819381808776293595"
+  password: "password"
   reboot_timeout: 0s
   manual_ip:
     static_ip: 192.168.1.69
@@ -28,10 +28,10 @@ logger:
 
 # Enable Home Assistant API
 api:
-  password: "frapwd290"
+  password: "password"
 
 ota:
-  password: "frapwd290"
+  password: "password"
 
 # SPI 
 spi:
