@@ -6,7 +6,7 @@ Fridge magnet with 4.2" eInk display for HomeAssistant
 * 1 Box prineted in 3D (three pieces)
 * 4 screws M8x12mm 
 * 4 bolts M8
-* 6 pieces of beryllium copper sheet arround 18x7mm for pattery contact
+* 6 pieces of beryllium copper sheet arround 18x7mm for battery contact
 * 30cm of electric wire
 * 1 eInk display 4.2" [here](https://www.waveshare.com/e-Paper-ESP8266-Driver-Board.htm) or Anazon, ebay, etc.
 * 1 ESP8266 Driver Board [here](https://www.waveshare.com/product/displays/e-paper/epaper-2/4.2inch-e-paper.htm) or Anazon, ebay, etc.
