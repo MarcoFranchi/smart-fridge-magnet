@@ -17,6 +17,7 @@ Fridge magnet with 4.2" eInk display for HomeAssistant
 * Print in 3D the case, frame and cover using .igs or .step file, best choice is ABS
 * Install the Fonts (copy all .ttf in ./fonts ESP folder) 
 * Copy the display_1.yaml in ESP folder and compile it
+* Replace your WiFi configuration in line 12, 13, 16, 17 and your API and OTA password in line 31 34, replace also your calendar's entity_id in line 97   
 * Flash the ESP8266 Driver Board with .bin file using USB
 
 TIP: for installation and test comment the DeepSleep declaration (line 20-24) before comiling otherwise you will wait one hour before you can make other changes.
