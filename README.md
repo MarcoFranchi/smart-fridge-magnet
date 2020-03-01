@@ -2,7 +2,7 @@
 Fridge magnet with 4.2" eInk display for HomeAssistant
 
 ![Image](https://raw.githubusercontent.com/MarcoFranchi/smart-fridge-magnet/master/IMG_0280%20(2).jpg)
-## Bill od Material
+## Bill off Material
 * 1 Box prineted in 3D (three pieces)
 * 4 Screws M8x12mm 
 * 4 Bolts M8
