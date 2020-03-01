@@ -1,0 +1,317 @@
+esphome:
+  name: "display_1"
+  platform: ESP8266
+  board: nodemcuv2
+  on_boot:
+    priority: -100
+    then:
+      - delay: 30s
+      - component.update: epaper
+
+wifi:
+  ssid: "WiFi-Casa"
+  password: "yourpassword"
+  reboot_timeout: 0s
+  manual_ip:
+    static_ip: DisplayIPAddress
+    gateway: YourGatewayIP
+    subnet: 255.255.255.0
+
+# Sleep Cycle
+deep_sleep:
+  id: deep_sleep_1
+  run_duration: 40s
+  sleep_duration: 60min
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "yourpassword"
+
+ota:
+  password: "yourpassword"
+
+# SPI 
+spi:
+  clk_pin: GPIO14
+  mosi_pin: GPIO13
+  miso_pin: GPIO12
+
+#  Time
+time:
+  - platform: homeassistant
+    id: current_time
+    timezone: Europe/Rome
+
+# Sensors
+binary_sensor:
+  - platform: status
+    id: connection_status
+    internal: true
+    
+sensor:
+  - platform: homeassistant
+    id: sacco_trasparente
+    entity_id: sensor.sacco_trasparente
+    internal: true
+  - platform: homeassistant
+    id: sacco_viola
+    entity_id: sensor.sacco_viola
+    internal: true
+  - platform: homeassistant
+    id: compostabile
+    entity_id: sensor.compostabile
+    internal: true
+  - platform: homeassistant
+    id: days_sacco_trasparente
+    entity_id: sensor.days_sacco_trasparente
+    internal: true
+  - platform: homeassistant
+    id: days_sacco_viola
+    entity_id: sensor.days_sacco_viola
+    internal: true
+  - platform: homeassistant
+    id: days_compostabile
+    entity_id: sensor.days_compostabile
+    internal: true
+    
+  - platform: adc
+    pin: VCC
+    id: vcc
+    name: "Display_1 Battery Level"
+    unit_of_measurement: "%"
+    filters:
+    - calibrate_linear:
+        - 3.0 -> 100.0
+        - 1.6 -> 0.0
+    
+  - platform: wifi_signal
+    name: "Display_1 WiFi Signal Sensor"
+    update_interval: 120s
+
+text_sensor:
+  - platform: homeassistant
+    id: calendar
+    entity_id: calendar.YourCalendar
+    internal: true   
+  - platform: homeassistant
+    id: calendar_message
+    entity_id: sensor.calendar_message
+    internal: true
+  - platform: homeassistant
+    id: calendar_description
+    entity_id: sensor.calendar_description
+    internal: true
+    
+  - platform: homeassistant
+    id: icon
+    entity_id: sensor.text_icon
+    internal: true
+  - platform: homeassistant
+    id: text
+    entity_id: input_text.display_text_title
+    internal: true
+  - platform: homeassistant
+    id: text1
+    entity_id: input_text.display_text_line1
+    internal: true
+  - platform: homeassistant
+    id: text2
+    entity_id: input_text.display_text_line2
+    internal: true
+  - platform: homeassistant
+    id: text3
+    entity_id: input_text.display_text_line3
+    internal: true
+ 
+  - platform: homeassistant
+    id: moon_icon
+    entity_id: sensor.moon_tpl
+
+  - platform: homeassistant
+    id: forecast_today_icon
+    entity_id: sensor.forecast_today_icon
+
+# Fonts
+font:
+  - file: 'fonts/ARIBL0.ttf'
+    id: content_font
+    size: 16
+
+  - file: 'fonts/ARIBL0.ttf'
+    id: title_font
+    size: 26
+    
+  - file: 'fonts/Roboto-Bold.ttf'
+    id: clock_font
+    size: 110
+    glyphs: [0, 1, 2, 3, 4, 5, 6, 7 ,8, 9]
+
+  - file: 'fonts/DroidSansMono.ttf'
+    id: temp_font
+    size: 36
+    glyphs:
+      ['&', '@', '!', ',', '.', '"', '%', '(', ')', '+', '-', '_', ':', '°', '0',
+       '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+       'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+       'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
+       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+       'u', 'v', 'w', 'x', 'y', 'z','ì', 'ä', 'ö', '/']
+
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: icon_font_xxl
+    size: 200
+    glyphs: [
+      "󰊉", # mdi-battery-off-outline
+      "", # mdi-wifi-off
+      ]
+
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: icon_font_xl
+    size: 88
+    glyphs: [
+      "", # mdi-alert-outline
+      "", # mdi-reminder
+      "ﷺ", # mdi-calendar-month
+      "﩯", # mdi-silverware-fork-knife
+      "󰃶", # mdi-alien-outline
+      "", # mdi-emoticon-happy-outline
+      
+      "", # mdi-weather-night
+      "", # mdi-weather-cloudy
+      "", # mdi-weather-fog
+      "", # mdi-weather-hail
+      "", # mdi-weather-lightning 
+      "", # mdi-weather-lightning-rainy
+      "", # mdi-weather-partly-cloudy
+      "", # mdi-weather-pouring
+      "", # mdi-weather-rainy
+      "", # mdi-weather-snowy
+      "", # mdi-weather-snowy-rainy
+      "", # mdi-weather-sunny
+      "", # mdi-weather-windy
+      "", # mdi-weather-windy-variant
+      "" # mdi-weather-hurricane
+      ]
+
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: icon_font_s
+    size: 40
+    glyphs: [
+      "ﷺ", # mdi-calendar-month
+      "", # mdi-delete
+      "", # mdi-recycle
+      "", # mdi-food-apple
+      "", # mdi-delete-variant      
+      # Moon
+      "ﾁ", # new_moon
+      "ﾄ", # waxing_crecent
+      "ｾ", # first_quarter
+      "ﾅ", # waxing_gibbous
+      "ｿ", # full_moon
+      "ﾃ", # waning_gibbous
+      "ﾀ", # last_quarter
+      "ﾂ", # waning_crescent
+      ]
+
+# Display eInk 4,2" (400X300 Px)
+display:
+  - platform: waveshare_epaper
+    id: epaper
+    cs_pin: 15
+    busy_pin: 16
+    reset_pin: 5
+    dc_pin: 4
+    model: 4.20in
+    rotation: 90°
+    # full_update_every: 30
+    update_interval: 120s
+    lambda: |-
+      setlocale(LC_ALL, "es_ES");
+      int x;
+      int y;
+      int h1;
+      int h2;
+      h1 = 21;
+      h2 = 31;
+      ESP_LOGI("debug", "Updating Display...");
+      if (id(vcc).state < 15) {
+        it.printf(150, 100, id(icon_font_xxl), TextAlign::TOP_CENTER , "󰊉");      
+      }
+      else if (id(connection_status).state == false) {
+        it.printf(150, 100, id(icon_font_xxl), TextAlign::TOP_CENTER , "");      
+      }
+      else if (id(text).state != "") {
+        /* Print Text from HA */
+        it.filled_rectangle(20, 40, 260, 3);
+        it.filled_circle(150, 41, 7);
+        it.filled_circle(130, 41, 5);
+        it.filled_circle(170, 41, 5);
+        x = 150;
+        y = 60;
+        it.printf(x, y, id(icon_font_xl), TextAlign::TOP_CENTER , "%s", id(icon).state.c_str());
+        y = 150;
+        it.printf(x, y, id(title_font), TextAlign::TOP_CENTER , "%s", id(text).state.c_str());
+        y += h2;
+        it.printf(x, y, id(content_font), TextAlign::TOP_CENTER , "%s", id(text1).state.c_str());
+        y += h1;
+        it.printf(x, y, id(content_font), TextAlign::TOP_CENTER , "%s", id(text2).state.c_str());
+        y += h1;
+        it.printf(x, y, id(content_font), TextAlign::TOP_CENTER , "%s", id(text3).state.c_str());
+        it.filled_rectangle(20, 360, 260, 3);
+        it.filled_circle(150, 361, 7);
+        it.filled_circle(130, 361, 5);
+        it.filled_circle(170, 361, 5);
+      } else {
+        /* Print Calendar */
+        it.strftime(150, 3, id(temp_font), TextAlign::TOP_CENTER, "%B", id(current_time).now());
+        it.strftime(150, 40, id(clock_font), TextAlign::TOP_CENTER, "%d", id(current_time).now());
+        it.strftime(150, 155, id(temp_font), TextAlign::TOP_CENTER, "%A", id(current_time).now());
+        /* Separator */
+        it.filled_rectangle(20, 215, 260, 3);
+        it.filled_circle(150, 216, 7);
+        it.filled_circle(130, 216, 5);
+        it.filled_circle(170, 216, 5);
+        if (id(calendar).state == "on") {
+          /* Print today from calendar */
+          it.printf(150, 245, id(icon_font_s), TextAlign::TOP_CENTER , "ﷺ");
+          it.printf(150, 290, id(title_font), TextAlign::TOP_CENTER , "%s", id(calendar_message).state.c_str());
+          it.printf(150, 320, id(content_font), TextAlign::TOP_CENTER , "%s", id(calendar_description).state.c_str());
+        } else if (id(sacco_trasparente).state < 2) {
+          /* Print Garbage */
+          it.printf(150, 240, id(title_font), TextAlign::TOP_CENTER , "Raccolta Rifiuti");
+          it.printf(60, 285, id(content_font), TextAlign::TOP_CENTER , "Viola" );
+          it.printf(60, 305, id(icon_font_s), TextAlign::TOP_CENTER , "");
+          if (id(sacco_viola).state == 0) {
+            it.printf(60, 345, id(content_font), TextAlign::TOP_CENTER , "OGGI");         
+          } else if (id(sacco_viola).state == 1) {
+            it.printf(60, 345, id(content_font), TextAlign::TOP_CENTER , "DOMANI");
+          } else {
+            it.printf(60, 345, id(content_font), TextAlign::TOP_CENTER , "%.0f gg", id(days_sacco_viola).state);
+          }
+          it.printf(150, 285, id(content_font), TextAlign::TOP_CENTER , "Bianco");
+          it.printf(150, 305, id(icon_font_s), TextAlign::TOP_CENTER , "");
+          if (id(sacco_trasparente).state == 0) {
+            it.printf(150, 345, id(content_font), TextAlign::TOP_CENTER , "OGGI");         
+          } else if (id(sacco_trasparente).state == 1) {
+            it.printf(150, 345, id(content_font), TextAlign::TOP_CENTER , "DOMANI");
+          } else {
+            it.printf(150, 345, id(content_font), TextAlign::TOP_CENTER , "%.0f gg", id(days_sacco_trasparente).state);
+          }
+          it.printf(240, 285, id(content_font), TextAlign::TOP_CENTER , "Umido");
+          it.printf(240, 305, id(icon_font_s), TextAlign::TOP_CENTER , "");
+          if (id(compostabile).state == 0) {
+            it.printf(240, 345, id(content_font), TextAlign::TOP_CENTER , "OGGI");         
+          } else if (id(compostabile).state == 1) {
+            it.printf(240, 345, id(content_font), TextAlign::TOP_CENTER , "DOMANI");
+          } else {
+            it.printf(240, 345, id(content_font), TextAlign::TOP_CENTER , "%.0f gg", id(days_compostabile).state);
+          } 
+        } else {
+          /* Print amenity */
+          /* it.printf(60, 300, id(icon_font_s), TextAlign::TOP_CENTER, "%s", id(moon_icon).state.c_str()); */
+          it.printf(150, 260, id(icon_font_xl), TextAlign::TOP_CENTER, "%s", id(forecast_today_icon).state.c_str());
+        }
+      }
