@@ -24,4 +24,4 @@ tip: for installation and test comment the DeepSleep declaration (line 20-24) be
 * [Garbage Collection](https://github.com/bruxy70/Garbage-Collection) from HACS
 * [Google Calendar Event](https://www.home-assistant.io/integrations/calendar.google/) from HA integration
 ### Edit configuration.yaml
-* merge the display configuration.jaml with your configuration.jaml file or split it in a differten file if you use conclude files
+* merge the display configuration.jaml with your configuration.jaml file or split it in a differten file if you use include files
