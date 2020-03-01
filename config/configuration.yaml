@@ -1,0 +1,155 @@
+#########################################################
+#############       Configuration.yaml      #############
+#########################################################
+#                                                       #
+#                 DO NOT USE AS IS                      #
+# Merge this configuration with your configuration.yaml #
+#                                                       #
+#########################################################
+
+# Google Calendar
+google:
+  client_id: !secret google_calendar_id_client
+  client_secret: !secret google_calendar_client_secret
+  
+# Include (see behind)
+sensor: !include sensor.yaml
+input_text: !include input_text.yaml
+input_select: !include input_select.yaml
+
+#########################
+###### sensor.yaml ######
+#########################
+
+# weather
+- platform: yr
+
+# Moon
+- platform: moon
+  
+# Icon for Moon
+- platform: template
+  sensors:
+    moon_tpl:
+      entity_id: sensor.moon
+      value_template: >-
+        {% set map = {
+          "new_moon": "ﾁ",
+          "waxing_crecent": "ﾂ",
+          "first_quarter": "ｾ",
+          "waxing_gibbous": "ﾃ",
+          "full_moon": "ｿ",
+          "waning_gibbous": "ﾃ",
+          "last_quarter": "ﾀ",
+          "waning_crescent": "ﾂ"
+        } %}
+        {{- map[states('sensor.moon')] -}}
+ 
+# Icon for weather
+- platform: template
+  sensors:
+    forecast_today_icon:
+      entity_id: weather.casa
+      value_template: >-
+        {% set map = {
+          "clear-night": "", 
+          "cloudy": "", 
+          "fog": "", 
+          "hail": "", 
+          "lightning": "", 
+          "lightning-rainy": "", 
+          "partlycloudy": "", 
+          "pouring": "", 
+          "rainy": "", 
+          "snowy": "",
+          "snowy-rainy": "",
+          "sunny": "",
+          "windy": "",
+          "windy-variant": "",
+          "exceptional": ""          
+        } %}
+        {{- map[states('weather.casa')] -}}
+
+# Calendar
+- platform: template
+  sensors:
+    calendar_message:
+      entity_id: "calendar.YourCalendarName"
+      value_template: "{{ state_attr('calendar.YourCalendarName', 'message') }}"
+- platform: template
+  sensors:
+    calendar_description:
+      entity_id: "calendar.battista_8888_gmail_com"
+      value_template: "{{ state_attr('calendar.YourCalendarName', 'description') }}"
+
+# Message Icon
+- platform: template
+  sensors:
+    text_icon:
+      entity_id: "input_select.text_icon"
+      value_template: >-
+        {% set map = {
+          "Attenzione": "",
+          "Ricordati": "",
+          "Calendario": "ﷺ",
+          "Ristorante": "﩯",
+          "Sorriso": "",
+          "UFO": "󰃶"
+        } %}
+        {{- map[states('input_select.text_icon')] -}}
+
+# Garbage
+- platform: template
+  sensors:
+    days_sacco_trasparente: 
+      entity_id: "sensor.sacco_trasparente"
+      value_template: "{{ state_attr('sensor.sacco_trasparente', 'days') }}"
+- platform: template
+  sensors:
+    days_sacco_viola:
+      entity_id: "sensor.sacco_viola"
+      value_template: "{{ state_attr('sensor.sacco_viola', 'days') }}"
+- platform: template
+  sensors:
+    days_compostabile:
+      entity_id: "sensor.compostabile"
+      value_template: "{{ state_attr('sensor.compostabile', 'days') }}"
+
+##############################
+####### input_text.yaml ######
+##############################
+
+# message
+display_text_title:
+  name: Titolo
+  min: 0
+  max: 20
+display_text_line1:
+  name: Prima riga
+  min: 0
+  max: 30
+display_text_line2:
+  name: Seconda riga
+  min: 0
+  max: 30
+display_text_line3:
+  name: Terza riga
+  min: 0
+  max: 30
+
+################################
+###### input_select.yaml #######
+################################
+# message Icon
+text_icon:
+  name: Icona
+  options:
+    - Attenzione
+    - Ricordati
+    - Calendario
+    - Ristorante
+    - Sorriso
+    - UFO
+  initial: Ricordati
+  
+  
